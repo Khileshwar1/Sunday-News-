@@ -1,43 +1,59 @@
+<!-- video.html -->
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sunday News - Videos</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <title>News Videos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+        }
+        .video-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+        iframe {
+            width: 90%;
+            max-width: 560px;
+            height: 315px;
+            border: none;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <img src="logo.png" class="logo" />
-    <h1>Sunday News</h1>
-    <nav>
-      <a href="index.html">होम</a>
-      <a href="gallery.html">गैलरी</a>
-      <a href="videos.html">वीडियो</a>
-      <a href="contact.html">संपर्क</a>
-    </nav>
-  </header>
 
-  <main class="container">
-    <h2>🎥 वीडियो न्यूज़</h2>
+    <h2>Latest News Videos</h2>
+
     <div class="video-container">
-      <iframe width="100%" height="315" src="https://youtu.be/LV19NivtiR8?si=AXMp0G0JoErxRhXA" 
-              frameborder="0" allowfullscreen></iframe>
-    </div>
-    <iframe width="100%" height="315" src="https://youtube.com/shorts/p0K-53YhYKc?si=nst_2vnG1LWSlqcD" 
-frameborder="0" allowfullscreen></iframe>
-    <iframe width="100%" height="315" 
-src="https://youtu.be/LV19NivtiR8?si=AXMp0G0JoErxRhXA" 
-title="YouTube video" frameborder="0"
-allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-allowfullscreen></iframe>
-    <iframe width="560" height="315" 
-src="https://youtube.com/shorts/p0K-53YhYKc?si=nst_2vnG1LWSlqcD" 
-title="YouTube video" frameborder="0"
-allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-allowfullscreen></iframe>
-  </main>
 
-  <footer>© 2025 Sunday News | Developed by Khileshwar Rathiya</footer>
+        <!-- Video 1 -->
+        <iframe src="https://www.youtube.com/embed/86kjXXOZTZw"
+                title="YouTube video 1"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+        </iframe>
+
+        <!-- Video 2 -->
+        <iframe src="https://www.youtube.com/embed/86kjXXOZTZw"
+                title="YouTube video 2"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+        </iframe>
+
+        <!-- Video 3 -->
+        <iframe src="https://www.youtube.com/embed/LV19NivtiR8"
+                title="YouTube video 3"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+        </iframe>
+
+    </div>
+
 </body>
 </html>
