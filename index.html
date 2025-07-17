@@ -1,98 +1,152 @@
-<!DOCTYPE html>
-<html lang="hi">
+<!DOCTYPE html><html lang="hi">
 <head>
   <meta charset="UTF-8">
-  <title>Sunday News</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SUNDAY NEWS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@500&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
+      margin: 0;
+      font-family: 'Mukta', sans-serif;
+      background-color: #fff8f0;
+      color: #333;
     }
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      background-color: #b30000;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      position: relative;
     }
-    #clock {
+    header img.logo {
+      height: 60px;
+      position: absolute;
+      top: 10px;
+      left: 20px;
+    }
+    nav {
+      margin-top: 10px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
       font-size: 18px;
+    }
+    .clock {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 18px;
+    }
+    .news-section {
+      padding: 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .news-card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    .news-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .news-card .content {
+      padding: 15px;
+    }
+    .news-card h3 {
+      margin: 10px 0 5px;
+    }
+    .news-card .date {
+      font-size: 14px;
+      color: gray;
+    }
+    .footer {
+      margin: 40px 20px;
+      text-align: center;
+    }
+    .whatsapp-btn {
+      background: #25D366;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 30px;
+      text-decoration: none;
       font-weight: bold;
     }
-    .scroll-news {
-      height: 150px;
-      overflow: hidden;
-      position: relative;
-      background-color: #f1f1f1;
-      border: 1px solid #ccc;
+    .download-share {
       margin-top: 20px;
-    }
-    #newsScroll {
-      position: absolute;
-      animation: scrollNews 12s linear infinite;
-    }
-    @keyframes scrollNews {
-      0% { top: 100%; }
-      100% { top: -100%; }
-    }
-    .gallery img {
-      width: 200px;
-      margin: 10px;
-      border: 2px solid #444;
-      border-radius: 8px;
-    }
-    footer {
-      margin-top: 40px;
-      background: #f8f8f8;
-      padding: 20px;
-      border-top: 2px solid #ccc;
     }
   </style>
 </head>
-<body>
-
-  <!-- Header + Live Time -->
+<body onload="startTime()">
   <header>
-    <h1>📰 Sunday News</h1>
-    <div id="clock"></div>
-  </header>
-
-  <!-- Latest News Scroll -->
-  <h2>📰 Latest News</h2>
-  <div class="scroll-news">
-    <div id="newsScroll">
-      <p>🔴 बारिश से स्कूलों की छुट्टी</p>
-      <p>🟢 नई सरकारी योजना लागू</p>
-      <p>🔵 मंदिर में रामनवमी पूजा</p>
-      <p>🟠 ट्रैफिक जाम का कारण VIP मूवमेंट</p>
+    <img src="/images/satsang-logo.png" alt="Logo" class="logo">
+    <div class="clock" id="clock">00:00:00</div>
+    <h1>अध्यात्मिक सत्संग NEWS</h1>
+    <nav>
+      <a href="#">होम</a>
+      <a href="#">सत्संग लाइव</a>
+      <a href="#">ब्लॉग</a>
+      <a href="#">संपर्क</a>
+    </nav>
+  </header>  <section class="news-section">
+    <div class="news-card">
+      <img src="/images/meditation.jpg" alt="Meditation">
+      <div class="content">
+        <p class="date">17 जुलाई 2025</p>
+        <h3>ध्यान और आत्मिक शांति की ओर</h3>
+        <a href="#">और पढ़ें</a>
+      </div>
     </div>
-  </div>
-
-  <!-- Timeline Photos -->
-  <h2>📸 Timeline Photos</h2>
-  <div class="gallery">
-    <img src="assets/image1.jpg" alt="News 1">
-    <img src="assets/image2.jpg" alt="News 2">
-    <img src="assets/image3.jpg" alt="News 3">
-  </div>
-
-  <!-- About Us -->
-  <footer>
-    <h2>ℹ️ About Us</h2>
-    <p>
-      "Sunday News" एक डिजिटल न्यूज़ प्लेटफॉर्म है जो आपको सटीक, निष्पक्ष और तेज़ खबरें प्रदान करता है।  
-      हम समाज, राजनीति, शिक्षा और टेक्नोलॉजी से जुड़ी अहम जानकारी लाते हैं।  
-      संपर्क करें: <b>sundaynews@email.com</b>
-    </p>
-  </footer>
-
-  <!-- Live Clock Script -->
-  <script>
-    function updateClock() {
-      const now = new Date();
-      document.getElementById('clock').innerText = now.toLocaleTimeString();
+    <div class="news-card">
+      <img src="/images/guru-nanak.jpg" alt="Guru Nanak">
+      <div class="content">
+        <p class="date">17 जुलाई 2025</p>
+        <h3>गुरु नानक देव जी की शिक्षाएं</h3>
+        <a href="#">और पढ़ें</a>
+      </div>
+    </div>
+    <div class="news-card">
+      <img src="/images/retreat.jpg" alt="Retreat">
+      <div class="content">
+        <p class="date">17 जुलाई 2025</p>
+        <h3>आध्यात्मिक विश्राम केंद्रों की महत्ता</h3>
+        <a href="#">और पढ़ें</a>
+      </div>
+    </div>
+    <div class="news-card">
+      <img src="/images/harmony.jpg" alt="Harmony">
+      <div class="content">
+        <p class="date">17 जुलाई 2025</p>
+        <h3>संत प्रवचनों से भीतर की एकता</h3>
+        <a href="#">और पढ़ें</a>
+      </div>
+    </div>
+  </section>  <div class="footer">
+    <a class="whatsapp-btn" href="https://wa.me/919999999999" target="_blank">📞 WhatsApp संपर्क करें</a>
+    <div class="download-share">
+      <p>
+        <a href="#" download>डाउनलोड करें</a> | <a href="#">🔗 लिंक शेयर करें</a>
+      </p>
+    </div>
+  </div>  <script>
+    function startTime() {
+      const today = new Date();
+      let h = today.getHours();
+      let m = today.getMinutes();
+      let s = today.getSeconds();
+      m = checkTime(m);
+      s = checkTime(s);
+      document.getElementById('clock').innerHTML = h + ":" + m + ":" + s;
+      setTimeout(startTime, 1000);
     }
-    setInterval(updateClock, 1000);
-    updateClock();
-  </script>
-
-</body>
+    function checkTime(i) {
+      return (i < 10) ? "0" + i : i;
+    }
+  </script></body>
   </html>
