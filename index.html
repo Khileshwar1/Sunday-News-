@@ -1,42 +1,98 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sunday News - Home</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Sunday News</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    #clock {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .scroll-news {
+      height: 150px;
+      overflow: hidden;
+      position: relative;
+      background-color: #f1f1f1;
+      border: 1px solid #ccc;
+      margin-top: 20px;
+    }
+    #newsScroll {
+      position: absolute;
+      animation: scrollNews 12s linear infinite;
+    }
+    @keyframes scrollNews {
+      0% { top: 100%; }
+      100% { top: -100%; }
+    }
+    .gallery img {
+      width: 200px;
+      margin: 10px;
+      border: 2px solid #444;
+      border-radius: 8px;
+    }
+    footer {
+      margin-top: 40px;
+      background: #f8f8f8;
+      padding: 20px;
+      border-top: 2px solid #ccc;
+    }
+  </style>
 </head>
 <body>
+
+  <!-- Header + Live Time -->
   <header>
-    <img src="logo.png" alt="Sunday News Logo" class="logo" />
-    <h1>Sunday News</h1>
-    <p class="tagline">हर रविवार की सबसे ताज़ा ख़बरें</p>
-    <nav>
-      <a href="index.html">होम</a>
-      <a href="gallery.html">गैलरी</a>
-      <a href="videos.html">वीडियो</a>
-      <a href="contact.html">संपर्क</a>
-    </nav>
+    <h1>📰 Sunday News</h1>
+    <div id="clock"></div>
   </header>
 
-  <main class="container">
-    <div class="news-item">
-  <h2>बड़ी खबर: भारी बारिश से जनजीवन प्रभावित</h2>
-  <p>15 जुलाई 2025: छत्तीसगढ़ के कई जिलों में भारी बारिश के कारण जनजीवन अस्त-व्यस्त हो गया है।</p>
+  <!-- Latest News Scroll -->
+  <h2>📰 Latest News</h2>
+  <div class="scroll-news">
+    <div id="newsScroll">
+      <p>🔴 बारिश से स्कूलों की छुट्टी</p>
+      <p>🟢 नई सरकारी योजना लागू</p>
+      <p>🔵 मंदिर में रामनवमी पूजा</p>
+      <p>🟠 ट्रैफिक जाम का कारण VIP मूवमेंट</p>
     </div>
-    
-    <div class="blog-post">
-      <img src="news1.jpg" alt="News Image">
-      <h2>🌟 नया संसद कानून पास</h2>
-      <p>संसद ने आज एक ऐतिहासिक कानून पारित किया है जिससे देश की प्रशासनिक प्रक्रिया में पारदर्शिता बढ़ेगी।</p>
-    </div>
-    <div class="blog-post">
-      <img src="news2.jpg" alt="Cricket News">
-      <h2>🏏 भारत ने 6 विकेट से जीत दर्ज की</h2>
-      <p>टीम इंडिया ने बेहतरीन प्रदर्शन करते हुए पाकिस्तान को 6 विकेट से हरा दिया। विराट कोहली ने अर्धशतक लगाया।</p>
-    </div>
-  </main>
+  </div>
 
-  <footer>© 2025 Sunday News | Developed by Khileshwar Rathiya</footer>
+  <!-- Timeline Photos -->
+  <h2>📸 Timeline Photos</h2>
+  <div class="gallery">
+    <img src="assets/image1.jpg" alt="News 1">
+    <img src="assets/image2.jpg" alt="News 2">
+    <img src="assets/image3.jpg" alt="News 3">
+  </div>
+
+  <!-- About Us -->
+  <footer>
+    <h2>ℹ️ About Us</h2>
+    <p>
+      "Sunday News" एक डिजिटल न्यूज़ प्लेटफॉर्म है जो आपको सटीक, निष्पक्ष और तेज़ खबरें प्रदान करता है।  
+      हम समाज, राजनीति, शिक्षा और टेक्नोलॉजी से जुड़ी अहम जानकारी लाते हैं।  
+      संपर्क करें: <b>sundaynews@email.com</b>
+    </p>
+  </footer>
+
+  <!-- Live Clock Script -->
+  <script>
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('clock').innerText = now.toLocaleTimeString();
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+
 </body>
-</html>
+  </html>
