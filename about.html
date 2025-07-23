@@ -1,39 +1,45 @@
-<!DOCTYPE html>
-<html lang="hi">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>हमारे बारे में - Sunday News</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header>
-    <div class="container">
-      <h1 class="logo">Sunday News</h1>
-      <nav>
-        <ul>
-          <li><a href="index.html">मुख्य पृष्ठ</a></li>
-          <li><a href="blog.html">ब्लॉग</a></li>
-          <li><a href="photos.html">फोटो</a></li>
-          <li><a href="videos.html">वीडियो</a></li>
-          <li><a href="about.html" class="active">हमारे बारे में</a></li>
-          <li><a href="contact.html">संपर्क करें</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+import requests import time import telebot import statistics
 
-  <main class="container">
-    <h2>हमारे बारे में</h2>
-    <p><strong>Sunday News</strong> एक निष्पक्ष, डिजिटल ब्लॉगिंग वेबसाइट है जो सच्चाई के प्रचार-प्रसार हेतु समर्पित है।</p>
-    <p>हमारा उद्देश्य है जनता तक वो जानकारी पहुँचाना जो वास्तव में महत्वपूर्ण है – धार्मिक जागरूकता, आध्यात्मिक मार्गदर्शन, और सामाजिक परिवर्तन से जुड़ी सच्ची ख़बरें।</p>
-    <p>यह प्लेटफ़ॉर्म संत रामपाल जी महाराज के सत्संग और सच्चे भक्ति मार्ग को जन-जन तक पहुँचाने का एक विनम्र प्रयास है।</p>
-  </main>
+=== CONFIGURATION ===
 
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 Sunday News | Powered by Khileshwar Rathiya</p>
-    </div>
-  </footer>
-</body>
-</html>
+BOT_TOKEN = '8101901257:AAEtwhNOlPr2xOrOZLcPg4HyRctLEbFnSF4' CHAT_ID = '@Khileshonthe_bot'  # For private use, use numeric user ID PAIR = 'EURUSD'  # Forex Pair INTERVAL = 60  # in seconds (1 minute) API_URL = 'https://api.binance.com/api/v3/klines?symbol=EURUSDT&interval=1m&limit=100'
+
+=== INIT BOT ===
+
+bot = telebot.TeleBot(BOT_TOKEN)
+
+=== FUNCTIONS ===
+
+def get_prices(): response = requests.get(API_URL) data = response.json() closes = [float(candle[4]) for candle in data]  # Closing prices return closes
+
+def calculate_rsi(prices, period=14): gains = [] losses = [] for i in range(1, period + 1): diff = prices[-i] - prices[-i - 1] if diff > 0: gains.append(diff) else: losses.append(abs(diff)) avg_gain = sum(gains) / period avg_loss = sum(losses) / period if losses else 1 rs = avg_gain / avg_loss rsi = 100 - (100 / (1 + rs)) return round(rsi, 2)
+
+def calculate_ma(prices, period=7): return round(statistics.mean(prices[-period:]), 5)
+
+def generate_signal(): prices = get_prices() rsi = calculate_rsi(prices) ma7 = calculate_ma(prices, 7) ma14 = calculate_ma(prices, 14) current_price = prices[-1]
+
+if rsi > 70 and current_price < ma7:
+    action = 'SELL'
+elif rsi < 30 and current_price > ma7:
+    action = 'BUY'
+else:
+    action = 'WAIT'
+
+signal = (
+    f"\u2728 *Binomo Trading Signal* \u2728\n"
+    f"Pair: {PAIR}\n"
+    f"Timeframe: 1 Minute\n"
+    f"RSI: {rsi}\n"
+    f"MA(7): {ma7}\n"
+    f"MA(14): {ma14}\n"
+    f"Price: {current_price}\n"
+    f"\n\ud83d\udd22 *Action*: {action}\n"
+    f"\nNext update in 1 minute..."
+)
+return signal
+
+=== MAIN LOOP ===
+
+print("Binomo Bot Started...") while True: try: signal = generate_signal() bot.send_message(chat_id=CHAT_ID, text=signal, parse_mode='Markdown') time.sleep(INTERVAL) except Exception as e: print(f"Error: {e}") time.sleep(5)
+
+  
