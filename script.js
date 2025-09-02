@@ -1,40 +1,79 @@
-const $app = document.querySelector(".app");
-const $modal = document.querySelector(".modal");
-const $currency = $app.querySelector(".currency");
-const $currencyContainer = $currency.querySelector(".currency-container");
-const $currencyValue = $currency.querySelector(".value");
-const $blockSetTime = $app.querySelector(".set-time");
-// const $timeInput = $blockSetTime.querySelector('.time_input');
-const $timeValue = $blockSetTime.querySelector(".time_val");
-const $timeItems = $blockSetTime.querySelector(".set-time-items");
-const $blockForecast = $app.querySelector(".forecast");
-const $blockForecastValue = $blockForecast.querySelector(".value");
-const $btnAction = $app.querySelector(".btn.action");
-const $btnActionText = $btnAction.querySelector(".text");
+// --- Existing code same रहेगा (UI, currency selection वगैरह) ---
+// नीचे वाले हिस्से में बदलाव कर रहे हैं
 
-const today = new Date();
-const dayOfWeek = today.getDay();
-const isWeekend = dayOfWeek === 6 || dayOfWeek === 0;
-let currentTime = getCurrentTime();
+// 🔥 Binance से Market Data लाने का function
+async function getMarketData(symbol = "BTCUSDT") {
+  const url = `https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=1m&limit=50`;
+  const response = await fetch(url);
+  const data = await response.json();
 
-const currency = [
-  "AUD/CAD",
-  "GBP/JPY",
-  "CHF/JPY",
-  "AUD/USD",
-  "EUR/CAD",
-  "USD/JPY",
-  "EUR/USD",
-  "CRYPTO IDX",
-];
+  // Closing prices निकालना
+  const closes = data.map(candle => parseFloat(candle[4]));
+  return closes;
+}
 
-let sessionCode = localStorage.getItem("sessionCode")
-  ? localStorage.getItem("sessionCode")
-  : "";
+// 🔥 RSI Calculation Function
+function calculateRSI(prices, period = 14) {
+  let gains = 0, losses = 0;
+  for (let i = 1; i <= period; i++) {
+    let diff = prices[i] - prices[i - 1];
+    if (diff >= 0) gains += diff;
+    else losses -= diff;
+  }
+  const avgGain = gains / period;
+  const avgLoss = losses / period;
 
-const sessionCodesArr = ["ORH-ooww-44313", "JBW-yghc-22725", "BLB-pnbu-80299"];
+  if (avgLoss === 0) return 100;
 
-if (isWeekend) {
+  const rs = avgGain / avgLoss;
+  return 100 - (100 / (1 + rs));
+}
+
+// 🔥 Forecast अब real market पर आधारित
+async function getForecast() {
+  try {
+    const prices = await getMarketData("BTCUSDT"); // आप चाहें तो EURUSD, ETHUSDT, etc बदल सकते हैं
+    const rsi = calculateRSI(prices);
+
+    if (rsi < 30) return "UP ✅ (Oversold)";
+    if (rsi > 70) return "DOWN ❌ (Overbought)";
+    return "WAIT ⏳ (Neutral)";
+  } catch (e) {
+    console.error("Error fetching data:", e);
+    return "Error ❌";
+  }
+}
+
+// 🔥 Button click पर real signal generate होगा
+$btnAction.addEventListener("click", async () => {
+  let status = $btnAction.dataset.initStatus;
+  if (status == "loading") return;
+  $btnAction.dataset.initStatus = "loading";
+
+  $blockForecastValue.innerHTML = '<div class="spinner"></div>';
+  $btnAction.classList.add("loading");
+  $btnActionText.textContent = "loading";
+
+  // Real signal लाओ
+  let forecastValue = await getForecast();
+
+  setTimeout(() => {
+    $blockForecastValue.innerHTML = forecastValue;
+
+    if (forecastValue.includes("DOWN")) {
+      $blockForecast.classList.add("down");
+      $blockForecast.classList.remove("up");
+    } else if (forecastValue.includes("UP")) {
+      $blockForecast.classList.add("up");
+      $blockForecast.classList.remove("down");
+    } else {
+      $blockForecast.classList.remove("up");
+      $blockForecast.classList.remove("down");
+    }
+
+    setTimeOut(1);
+  }, 1000);
+});if (isWeekend) {
   if (!$currencyValue.textContent.includes("CRYPTO IDX")) {
     $currencyValue.textContent = currency[0] + " (OTC)";
   }
